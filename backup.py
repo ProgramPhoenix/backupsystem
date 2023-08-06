@@ -1,19 +1,39 @@
 import paramiko
 import dotenv
 import os
+import logging
+import subprocess
+
+logging.basicConfig()
+logging.getLogger("paramiko").setLevel(logging.DEBUG)
 
 dotenv.load_dotenv()
 
 host = os.getenv("host")
-username = os.getenv("username")
+username = os.getenv("user")
 keyfile = os.getenv("keyfile")
+password = os.getenv("password")
 
-client = paramiko.client.SSHClient()
-client.connect(hostname=host, username=username, key_filename=keyfile)
+sshProcess = subprocess.Popen(['ssh',
+                               '-i',
+                               keyfile,
+                               username + "@" + host],
+                               stdin=subprocess.PIPE,
+                               stdout = subprocess.PIPE,
+                               universal_newlines=True,
+                               bufsize=0)
+sshProcess.stdin.write("ls\n")
+sshProcess.stdin.write("echo END\\n")
+sshProcess.stdin.write("uptime\\n")
+sshProcess.stdin.write("logout\\n")
+sshProcess.stdin.close()
 
-client.load_host_keys()
 
-_stdin, _stdout,_stderr = client.exec_command("df")
-print(_stdout.read().decode())
+for line in sshProcess.stdout:
+    if line == "END\n":
+        break
+    print(line,end="")
 
-client.close()
+#to catch the lines up to logout
+for line in  sshProcess.stdout:
+    print(line,end="")

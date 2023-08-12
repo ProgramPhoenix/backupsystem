@@ -61,7 +61,7 @@ scpProcess = subprocess.Popen(['scp',
                               universal_newlines=True,
                               bufsize=0)
 
-print(scpProcess.stdin.readline())
+print(scpProcess.stdout.readline())
 
 while scpProcess.poll() is None:
     print("running")

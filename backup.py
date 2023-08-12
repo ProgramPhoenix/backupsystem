@@ -21,7 +21,7 @@ k = paramiko.RSAKey.from_private_key_file(keyfile)
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(hostname=host, username=username, pkey=k)
 ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls")
-print( ssh_stdin.readline())
+print(ssh_stdout.readline())
 ssh.close()
 
 

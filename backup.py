@@ -22,6 +22,9 @@ sshProcess = subprocess.Popen(['ssh',
                                stdout = subprocess.PIPE,
                                universal_newlines=True,
                                bufsize=0)
+for line in sshProcess.stdout:
+    continue
+
 sshProcess.stdin.write("ls\n")
 sshProcess.stdin.write("echo END\n")
 sshProcess.stdin.write("uptime\n")

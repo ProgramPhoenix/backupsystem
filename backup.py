@@ -1,4 +1,5 @@
 import dotenv
+import paramiko
 import os
 import logging
 import subprocess
@@ -13,7 +14,18 @@ username = os.getenv("user")
 keyfile = os.getenv("keyfile")
 password = os.getenv("password")
 
+ssh = paramiko.SSHClient()
+k = paramiko.RSAKey.from_private_key_file(keyfile)
+# OR k = paramiko.DSSKey.from_private_key_file(keyfilename)
 
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect(hostname=host, username=username, pkey=k)
+ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls")
+print( ssh_stdin.readline())
+ssh.close()
+
+
+'''
 sshProcess = subprocess.Popen(['ssh',
                                '-i',
                                keyfile,
@@ -40,3 +52,4 @@ for line in sshProcess.stdout:
 #to catch the lines up to logout
 for line in  sshProcess.stdout:
     print(line, end="")
+'''

@@ -28,8 +28,8 @@ try:
         print("sleep")
         time.sleep(10)
 except KeyboardInterrupt:
-    print(ssh_stdout.readlines())
     print(ssh_stderr.readlines())
+    print(ssh_stdout.readlines())
 
 print(ssh_stdout.channel.recv_exit_status())
 ssh_stdin.close()

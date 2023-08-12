@@ -24,6 +24,8 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(hostname=host, username=username, pkey=k, timeout=None)
 ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("zip -r backup_vol.zip volumes", get_pty=True, timeout=None)
 while not ssh_stdout.channel.exit_status_ready():
+    print(ssh_stdout.readlines())
+    print(ssh_stderr.readlines())
     print("sleep")
     time.sleep(10)
 print(ssh_stdout.channel.recv_exit_status())

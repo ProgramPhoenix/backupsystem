@@ -41,8 +41,11 @@ sshProcess = subprocess.Popen(['ssh',
                                '-i',
                                keyfile,
                                username + "@" + host,
-                               command])
-
+                               command],
+                              stdin=subprocess.PIPE,
+                              stdout=subprocess.PIPE,
+                              universal_newlines=True,
+                              bufsize=0)
 
 
 '''

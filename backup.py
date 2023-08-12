@@ -1,4 +1,3 @@
-import paramiko
 import dotenv
 import os
 import logging
@@ -13,6 +12,7 @@ host = os.getenv("host")
 username = os.getenv("user")
 keyfile = os.getenv("keyfile")
 password = os.getenv("password")
+
 
 sshProcess = subprocess.Popen(['ssh',
                                '-i',

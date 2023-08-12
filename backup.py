@@ -34,7 +34,6 @@ ssh_stdout.close()
 ssh_stderr.close()
 ssh.close()
 '''
-'''
 command = "zip -r backup_vol.zip volumes & "
 
 sshProcess = subprocess.Popen(['ssh',
@@ -50,7 +49,7 @@ sshProcess = subprocess.Popen(['ssh',
 while sshProcess.poll() is None:
     print("running")
     time.sleep(10)
-'''
+
 scpProcess = subprocess.Popen(['scp',
                                '-i',
                                keyfile,
@@ -60,8 +59,6 @@ scpProcess = subprocess.Popen(['scp',
                               stdout=subprocess.PIPE,
                               universal_newlines=True,
                               bufsize=0)
-
-print(scpProcess.stdout.readline())
 
 while scpProcess.poll() is None:
     print("running")

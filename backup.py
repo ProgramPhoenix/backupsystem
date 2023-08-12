@@ -4,7 +4,7 @@ import dotenv
 import paramiko
 import os
 import logging
-#import subprocess
+import subprocess
 
 logging.basicConfig()
 logging.getLogger("paramiko").setLevel(logging.DEBUG)
@@ -15,7 +15,7 @@ host = os.getenv("host")
 username = os.getenv("user")
 keyfile = os.getenv("keyfile")
 password = os.getenv("password")
-
+'''
 ssh = paramiko.SSHClient()
 k = paramiko.RSAKey.from_private_key_file(keyfile)
 # OR k = paramiko.DSSKey.from_private_key_file(keyfilename)
@@ -33,6 +33,16 @@ ssh_stdin.close()
 ssh_stdout.close()
 ssh_stderr.close()
 ssh.close()
+'''
+
+command = "nohup zip -r backup_vol.zip volumes & "
+
+sshProcess = subprocess.Popen(['ssh',
+                               '-i',
+                               keyfile,
+                               username + "@" + host,
+                               command])
+
 
 
 '''

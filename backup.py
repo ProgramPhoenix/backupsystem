@@ -22,15 +22,15 @@ k = paramiko.RSAKey.from_private_key_file(keyfile)
 
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(hostname=host, username=username, pkey=k)
-transport = ssh.get_transport()
-channel = transport.open_session()
-channel.exec_command("zip -r backup_vol.zip volumes")
-while not channel.exit_status_ready():
+ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("zip -r backup_vol.zip volumes", get_pty=True, timeout=None)
+while not ssh_stdout.channel.exit_status_ready():
+    print(ssh_stdout.channel.recv_exit_status())
     print("sleep")
     time.sleep(10)
-print(channel.recv_exit_status())
-channel.close()
-transport.close()
+print(ssh_stdout.channel.recv_exit_status())
+ssh_stdin.close()
+ssh_stdout.close()
+ssh_stderr.close()
 ssh.close()
 
 

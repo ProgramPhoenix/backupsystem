@@ -47,6 +47,11 @@ sshProcess = subprocess.Popen(['ssh',
                               universal_newlines=True,
                               bufsize=0)
 
+while sshProcess.poll() is None:
+    print("running")
+    time.sleep(10)
+
+
 
 '''
 sshProcess = subprocess.Popen(['ssh',

@@ -35,7 +35,7 @@ ssh_stderr.close()
 ssh.close()
 '''
 
-command = "nohup zip -r backup_vol.zip volumes & "
+command = "zip -r backup_vol.zip volumes & "
 
 sshProcess = subprocess.Popen(['ssh',
                                '-i',

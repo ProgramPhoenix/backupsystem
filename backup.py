@@ -2,7 +2,7 @@ import dotenv
 import paramiko
 import os
 import logging
-import subprocess
+#import subprocess
 
 logging.basicConfig()
 logging.getLogger("paramiko").setLevel(logging.DEBUG)
@@ -22,6 +22,9 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(hostname=host, username=username, pkey=k)
 ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls")
 print(ssh_stdout.readline())
+ssh_stdin.close()
+ssh_stdout.close()
+ssh_stderr.close()
 ssh.close()
 
 

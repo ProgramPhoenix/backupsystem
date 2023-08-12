@@ -22,14 +22,11 @@ k = paramiko.RSAKey.from_private_key_file(keyfile)
 
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(hostname=host, username=username, pkey=k, timeout=None)
-ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("nohub zip -r backup_vol.zip volumes &", get_pty=True, timeout=None)
-try:
-    while not ssh_stdout.channel.exit_status_ready():
-        print("sleep")
-        time.sleep(10)
-except KeyboardInterrupt:
-    print(ssh_stderr.readlines())
-    print(ssh_stdout.readlines())
+ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("nohup zip -r backup_vol.zip volumes &", get_pty=True, timeout=None)
+
+while not ssh_stdout.channel.exit_status_ready():
+    print("sleep")
+    time.sleep(10)
 
 print(ssh_stdout.channel.recv_exit_status())
 ssh_stdin.close()

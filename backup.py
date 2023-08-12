@@ -1,3 +1,5 @@
+import time
+
 import dotenv
 import paramiko
 import os
@@ -20,8 +22,11 @@ k = paramiko.RSAKey.from_private_key_file(keyfile)
 
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(hostname=host, username=username, pkey=k)
-ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls")
+ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("zip -r backup_vol.zip volumes")
 print(ssh_stdout.readline())
+while(ssh_stdout.channel.recv_exit_status() != 0):
+    print("sleep")
+    time.sleep(10)
 ssh_stdin.close()
 ssh_stdout.close()
 ssh_stderr.close()

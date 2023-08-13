@@ -34,6 +34,9 @@ ssh_stdout.close()
 ssh_stderr.close()
 ssh.close()
 '''
+
+#backup nextcloud calendar: https://nextcloud.ujqlg.de/remote.php/dav/calendars/mkraus/personal?export
+
 command = "zip -r backup_vol.zip volumes & "
 
 sshProcess = subprocess.Popen(['ssh',

@@ -52,7 +52,7 @@ scpProcess = subprocess.Popen(['scp',
                                '-i',
                                keyfile,
                                username + "@" + host + ":/root/backup_vol.zip",
-
+                               outfile
                                ])
 
 while scpProcess.poll() is None:

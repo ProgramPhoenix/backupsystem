@@ -46,11 +46,14 @@ while sshProcess.poll() is None:
     print("running")
     time.sleep(10)
 
+outfile = os.path.join(os.path.dirname(os.path.realpath(__file__)), "backup.zip")
+
 scpProcess = subprocess.Popen(['scp',
                                '-i',
                                keyfile,
                                username + "@" + host + ":/root/backup_vol.zip",
-                               "/home/programphoenix/backup"])
+
+                               ])
 
 while scpProcess.poll() is None:
     print("running")

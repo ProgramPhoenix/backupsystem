@@ -40,11 +40,7 @@ sshProcess = subprocess.Popen(['ssh',
                                '-i',
                                keyfile,
                                username + "@" + host,
-                               command],
-                              stdin=subprocess.PIPE,
-                              stdout=subprocess.PIPE,
-                              universal_newlines=True,
-                              bufsize=0)
+                               command])
 
 while sshProcess.poll() is None:
     print("running")
@@ -54,11 +50,7 @@ scpProcess = subprocess.Popen(['scp',
                                '-i',
                                keyfile,
                                username + "@" + host + ":/root/backup_vol.zip",
-                               "/home/programphoenix/backup"],
-                              stdin=subprocess.PIPE,
-                              stdout=subprocess.PIPE,
-                              universal_newlines=True,
-                              bufsize=0)
+                               "/home/programphoenix/backup"])
 
 while scpProcess.poll() is None:
     print("running")

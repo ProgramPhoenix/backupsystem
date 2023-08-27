@@ -35,32 +35,40 @@ ssh_stderr.close()
 ssh.close()
 '''
 
-#backup nextcloud calendar: https://nextcloud.ujqlg.de/remote.php/dav/calendars/mkraus/personal?export
+#backup nextcloud calendar: https://cal.ujqlg.de/remote.php/dav/calendars/user/personal?export
+
+
+def runcommand(ar):
+    scpProcess = subprocess.Popen(ar, stdout=subprocess.PIPE)
+
+    while scpProcess.poll() is None:
+        print("running")
+        time.sleep(10)
+
+    print(scpProcess.communicate()[0])
+
+
+
 
 command = "zip -r backup_vol.zip volumes & "
 
-sshProcess = subprocess.Popen(['ssh',
-                               '-i',
-                               keyfile,
-                               username + "@" + host,
-                               command])
+runcommand(['ssh',
+            '-i',
+            keyfile,
+            username + "@" + host,
+            command])
 
-while sshProcess.poll() is None:
-    print("running")
-    time.sleep(10)
 
 outfile = os.path.join(os.path.dirname(os.path.realpath(__file__)), "backup.zip")
 
-scpProcess = subprocess.Popen(['scp',
-                               '-i',
-                               keyfile,
-                               username + "@" + host + ":/root/backup_vol.zip",
-                               outfile
-                               ])
+runcommand(['scp',
+            '-i',
+            keyfile,
+            username + "@" + host + ":/root/backup_vol.zip",
+            outfile
+            ])
 
-while scpProcess.poll() is None:
-    print("running")
-    time.sleep(10)
+
 
 '''
 sshProcess = subprocess.Popen(['ssh',

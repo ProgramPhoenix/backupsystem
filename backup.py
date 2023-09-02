@@ -1,14 +1,12 @@
 import time
 
 import dotenv
-import paramiko
 import os
-import logging
 import subprocess
-
+'''
 logging.basicConfig()
 logging.getLogger("paramiko").setLevel(logging.DEBUG)
-
+'''
 dotenv.load_dotenv()
 
 host = os.getenv("host")
@@ -42,22 +40,33 @@ def runcommand(ar):
     scpProcess = subprocess.Popen(ar, stdout=subprocess.PIPE)
 
     while scpProcess.poll() is None:
-        print("running")
         time.sleep(10)
 
     print(scpProcess.communicate()[0])
 
 
+def sshcommand(com):
+    ar = ['ssh',
+          '-i',
+          keyfile,
+          username + "@" + host,
+          com]
+    runcommand()
 
 
-command = "zip -r backup_vol.zip volumes & "
+print("test")
 
-runcommand(['ssh',
-            '-i',
-            keyfile,
-            username + "@" + host,
-            command])
+sshcommand("ls -la")
 
+exit(0)
+
+print("compromising")
+
+command = "zip -r backup_vol.zip volumes"
+
+sshcommand(command)
+
+print("downloading")
 
 outfile = os.path.join(os.path.dirname(os.path.realpath(__file__)), "backup.zip")
 
@@ -68,6 +77,13 @@ runcommand(['scp',
             outfile
             ])
 
+print("deleting")
+
+command = "rm backup_vol.zip"
+
+sshcommand(command)
+
+print("fin")
 
 
 '''

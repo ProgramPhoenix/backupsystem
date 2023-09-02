@@ -51,7 +51,7 @@ def sshcommand(com):
           keyfile,
           username + "@" + host,
           com]
-    runcommand()
+    runcommand(ar)
 
 
 print("test")

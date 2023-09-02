@@ -42,7 +42,7 @@ def runcommand(ar):
     while scpProcess.poll() is None:
         time.sleep(10)
 
-    print(scpProcess.communicate()[0])
+    print(str(scpProcess.communicate()[0], "utf-8"))
 
 
 def sshcommand(com):

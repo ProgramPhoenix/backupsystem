@@ -54,12 +54,6 @@ def sshcommand(com):
     runcommand(ar)
 
 
-print("test")
-
-sshcommand("ls -la")
-
-exit(0)
-
 print("compromising")
 
 command = "zip -r backup_vol.zip volumes"
